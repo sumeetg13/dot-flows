@@ -1,0 +1,18 @@
+{
+  "decisionKey": "notify-channel",
+  "name": "How to notify the customer",
+  "hitPolicy": "FIRST",
+  "inputs": [
+    { "id": "total", "label": "Order total", "expression": "#order.total" },
+    { "id": "hasEmail", "label": "Has an email address", "expression": "#customer.email != null" }
+  ],
+  "outputs": [{ "name": "channel" }],
+  "rules": [
+    {
+      "id": "rule1",
+      "when": { "total": { "op": ">=", "value": 100 }, "hasEmail": { "op": "==", "value": true } },
+      "then": { "channel": "EMAIL" }
+    },
+    { "id": "rule2", "when": {}, "then": { "channel": "SMS" } }
+  ]
+}

@@ -1,0 +1,2 @@
+io.dotflows.spring.DotflowsAutoConfiguration
+io.dotflows.spring.web.DotflowsWebConfiguration

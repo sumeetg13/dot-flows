@@ -1,0 +1,48 @@
+@import 'tailwindcss';
+@import '@xyflow/react/dist/style.css';
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 antialiased;
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+.field {
+  @apply w-full rounded-md border border-slate-300 bg-white px-2.5 py-1.5 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 disabled:bg-slate-100 disabled:text-slate-500;
+}
+
+.field-mono {
+  @apply font-mono text-[13px];
+}
+
+.label {
+  @apply mb-1 block text-xs font-medium text-slate-600;
+}
+
+.hint {
+  @apply mt-1 text-xs text-slate-500;
+}
+
+.th {
+  @apply border-b border-slate-200 px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-500;
+}
+
+.td {
+  @apply border-b border-slate-100 px-3 py-2 text-sm;
+}
+
+.react-flow__edge-text {
+  font-size: 11px;
+}
+
+.react-flow__handle {
+  width: 9px;
+  height: 9px;
+  background: #6366f1;
+  border: 2px solid white;
+}

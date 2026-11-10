@@ -1,0 +1,20 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: maven
+      # Builds the UI (Node is downloaded by the build), runs unit tests and the H2 and PostgreSQL
+      # integration tests; the runner's Docker provides PostgreSQL through Testcontainers.
+      - run: ./mvnw -B verify

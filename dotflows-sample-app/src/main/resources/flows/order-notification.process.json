@@ -1,0 +1,57 @@
+{
+  "processKey": "order-notification",
+  "name": "Order notification",
+  "nodes": [
+    { "id": "start", "type": "start" },
+    {
+      "id": "pickChannel",
+      "name": "Pick channel",
+      "type": "task",
+      "taskType": "decision",
+      "config": { "decisionKey": "notify-channel", "resultVariable": "channel" }
+    },
+    { "id": "byChannel", "name": "Which channel?", "type": "exclusiveGateway" },
+    {
+      "id": "email",
+      "name": "Email the customer",
+      "type": "task",
+      "taskType": "delegate",
+      "config": {
+        "delegate": "sendEmail",
+        "inputs": {
+          "to": "#customer.email",
+          "subject": "'Your order ' + #order.id + ' is confirmed'",
+          "body": "'Thank you! Total: ' + #order.total"
+        }
+      }
+    },
+    {
+      "id": "sms",
+      "name": "Text the customer",
+      "type": "task",
+      "taskType": "delegate",
+      "config": {
+        "delegate": "sendSms",
+        "inputs": { "to": "#customer.phone", "text": "'Order ' + #order.id + ' confirmed'" }
+      },
+      "retry": { "maxAttempts": 2, "backoffSeconds": 5 }
+    },
+    { "id": "end", "type": "end" }
+  ],
+  "edges": [
+    { "id": "e1", "from": "start", "to": "pickChannel" },
+    { "id": "e2", "from": "pickChannel", "to": "byChannel" },
+    { "id": "e3", "from": "byChannel", "to": "email", "condition": "#channel == 'EMAIL'" },
+    { "id": "e4", "from": "byChannel", "to": "sms", "default": true },
+    { "id": "e5", "from": "email", "to": "end" },
+    { "id": "e6", "from": "sms", "to": "end" }
+  ],
+  "layout": {
+    "start": { "x": 40, "y": 160 },
+    "pickChannel": { "x": 150, "y": 140 },
+    "byChannel": { "x": 400, "y": 150 },
+    "email": { "x": 540, "y": 60 },
+    "sms": { "x": 540, "y": 230 },
+    "end": { "x": 800, "y": 160 }
+  }
+}
